@@ -1,6 +1,8 @@
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const ProvidePlugin = require('webpack/lib/ProvidePlugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 // const
 
 module.exports = {
@@ -19,14 +21,20 @@ module.exports = {
     new ExtractTextPlugin({ // define where to save the file
       filename: '[name].bundle.css',
       allChunks: true,
+    }),
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery',
+      Popper: ['popper.js', 'default']
     })
   ],
   module: {
     rules: [
-      // { // regular css files
-      //   test: /\.css$/,
-      //   loader: ExtractTextPlugin.extract(['css-loader?importLoaders=1'])
-      // },
+      { // regular css files
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract(['css-loader?importLoaders=1'])
+      },
       { // sass / scss loader for webpack
         test: /\.(sass|scss)$/,
         loader: ExtractTextPlugin.extract(['css-loader', 'sass-loader'])
