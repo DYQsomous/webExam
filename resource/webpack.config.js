@@ -1,20 +1,18 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+// const
 
 module.exports = {
-  entry: './src/js/index.js',
+  entry: './index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].bundle.js'
   },
   devtool: 'inline-source-map',
   devServer: {
-    contentBase: [path.join(__dirname, "dist"), path.join(__dirname, "")]
-    // ,
-    // noInfo: true,
-    // hot: true,
-    // inline: true
+    contentBase: [path.join(__dirname, "dist"), path.join(__dirname, "")],
+    compress: true
   },
   plugins: [
     new CleanWebpackPlugin(['dist']),
@@ -35,7 +33,6 @@ module.exports = {
       },
       {
         test: /\.html$/,
-        // loader: ExtractTextPlugin.extract([])
         use: 'html-loader'
       },
     ]
